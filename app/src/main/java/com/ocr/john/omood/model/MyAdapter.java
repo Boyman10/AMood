@@ -1,13 +1,16 @@
 package com.ocr.john.omood.model;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.ocr.john.omood.R;
+
+import java.util.List;
 
 /**
  * Created by John on 11/27/2017.
@@ -15,7 +18,7 @@ import com.ocr.john.omood.R;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private Drawable[] mDataset;
+    private List<Drawable> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -31,8 +34,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(Drawable[] myDataset) {
-        mDataset = myDataset;
+    public MyAdapter(Context ct) {
+
+        // fetch the getResources from the context sent by Activity
+        Resources res = ct.getResources();
+
+        // adding our images to the list :
+        mDataset.add(res.getDrawable(R.mipmap.smiley_happy));
+        mDataset.add(res.getDrawable(R.mipmap.smiley_normal));
+        mDataset.add(res.getDrawable(R.mipmap.smiley_super_happy));
+        mDataset.add(res.getDrawable(R.mipmap.smiley_sad));
     }
 
     // Create new views (invoked by the layout manager)
@@ -55,13 +66,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mImageView.setImageDrawable(mDataset[position]);
+        holder.mImageView.setImageDrawable(mDataset.get(position));
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }
