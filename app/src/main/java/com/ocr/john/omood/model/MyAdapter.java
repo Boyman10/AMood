@@ -5,20 +5,24 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ocr.john.omood.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by John on 11/27/2017.
+ * infos in https://www.supinfo.com/articles/single/563-utiliser-recyclerview-android ?
  */
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private List<Drawable> mDataset;
+    private List<Drawable> mDataset = new ArrayList<Drawable>();
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -27,9 +31,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // each data item is just an image in this case
         public ImageView mImageView;
 
-        public ViewHolder(ImageView v) {
-            super(v);
-            mImageView = v;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            mImageView = (ImageView) itemView.findViewById(R.id.imageView);
         }
     }
 
@@ -49,16 +53,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     // Create new views (invoked by the layout manager)
     @Override
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
-        // create a new view
-        ImageView v = (ImageView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_cell, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-
-
-
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+                                                   int position) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_cell, parent, false);
+        return new ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -75,4 +72,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public int getItemCount() {
         return mDataset.size();
     }
+
+
+
 }
