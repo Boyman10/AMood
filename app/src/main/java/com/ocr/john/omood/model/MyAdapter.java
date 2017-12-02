@@ -3,6 +3,7 @@ package com.ocr.john.omood.model;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             mImageView = (ImageView) itemView.findViewById(R.id.imageView);
+
+            mImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog show = new AlertDialog.Builder(mImageView.getContext())
+                            .setTitle("Clicked on me!" + mImageView.getContext().toString())
+                            .setMessage("HOOO")
+                            .show();
+                }
+            });
         }
     }
 
