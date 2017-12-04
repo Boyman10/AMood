@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.ocr.john.omood.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private List<Drawable> mDataset;
+    private List<Drawable> mDataset = new ArrayList<Drawable>();
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -50,12 +51,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
+
+
         // create a new view
         ImageView v = (ImageView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_cell, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-
-
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
