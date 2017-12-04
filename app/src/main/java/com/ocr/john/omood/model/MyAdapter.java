@@ -3,10 +3,13 @@ package com.ocr.john.omood.model;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ocr.john.omood.R;
 
@@ -15,24 +18,17 @@ import java.util.List;
 
 /**
  * Created by John on 11/27/2017.
+ * infos in https://www.supinfo.com/articles/single/563-utiliser-recyclerview-android ?
  */
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     private List<Drawable> mDataset = new ArrayList<Drawable>();
+<<<<<<< HEAD
+=======
+    private List<String> mDatasetStr = new ArrayList<String>();
+>>>>>>> 0b8c2a775e57226416e9f167af1c920e6cbc46ed
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just an image in this case
-        public ImageView mImageView;
-
-        public ViewHolder(ImageView v) {
-            super(v);
-            mImageView = v;
-        }
-    }
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public MyAdapter(Context ct) {
@@ -41,14 +37,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         Resources res = ct.getResources();
 
         // adding our images to the list :
+
         mDataset.add(res.getDrawable(R.mipmap.smiley_happy));
+        mDatasetStr.add("Happy");
         mDataset.add(res.getDrawable(R.mipmap.smiley_normal));
+        mDatasetStr.add("Normal");
         mDataset.add(res.getDrawable(R.mipmap.smiley_super_happy));
+        mDatasetStr.add("Super");
         mDataset.add(res.getDrawable(R.mipmap.smiley_sad));
+        mDatasetStr.add("Sad");
+        mDataset.add(res.getDrawable(R.mipmap.smiley_disappointed));
+        mDatasetStr.add("Disappointed");
+
     }
 
     // Create new views (invoked by the layout manager)
     @Override
+<<<<<<< HEAD
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
 
@@ -59,13 +64,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
+=======
+    public MyViewHolder onCreateViewHolder(ViewGroup parent,
+                                                   int position) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_cell, parent, false);
+        return new MyViewHolder(view);
+>>>>>>> 0b8c2a775e57226416e9f167af1c920e6cbc46ed
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+        holder.mImageView.setTag(mDatasetStr.get(position));
         holder.mImageView.setImageDrawable(mDataset.get(position));
 
     }
@@ -75,4 +87,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public int getItemCount() {
         return mDataset.size();
     }
+
+
+
 }
