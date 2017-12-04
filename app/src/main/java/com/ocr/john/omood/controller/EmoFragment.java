@@ -9,17 +9,7 @@ import android.view.ViewGroup;
 
 import com.ocr.john.omood.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link EmoFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link EmoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EmoFragment extends Fragment {
-
-
 
     public EmoFragment() {
         // Required empty public constructor

@@ -24,15 +24,14 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     private List<Drawable> mDataset = new ArrayList<Drawable>();
-<<<<<<< HEAD
-=======
     private List<String> mDatasetStr = new ArrayList<String>();
->>>>>>> 0b8c2a775e57226416e9f167af1c920e6cbc46ed
 
+    private ViewHolderOnClickListener vListener;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(Context ct) {
+    public MyAdapter(Context ct, ViewHolderOnClickListener listener) {
 
+        vListener = listener;
         // fetch the getResources from the context sent by Activity
         Resources res = ct.getResources();
 
@@ -52,24 +51,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     }
 
     // Create new views (invoked by the layout manager)
-    @Override
-<<<<<<< HEAD
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
-
-
-        // create a new view
-        ImageView v = (ImageView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_cell, parent, false);
-
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
-=======
     public MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int position) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_cell, parent, false);
-        return new MyViewHolder(view);
->>>>>>> 0b8c2a775e57226416e9f167af1c920e6cbc46ed
+        return new MyViewHolder(view,vListener);
     }
 
     // Replace the contents of a view (invoked by the layout manager)

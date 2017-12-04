@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void load(String title, String emotag) {
 
-        if(findViewById(R.id.emoFrg) != null) {
+        if(findViewById(R.id.defaultFrg) != null) {
 
             EmoFragment frg = EmoFragment.create(emotag);
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             // so we can understand fragments instead of getFragmentManager
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.emoFrg, frg)
+                    .replace(R.id.defaultFrg, frg)
                     .addToBackStack(null)
                     .commit();
 
