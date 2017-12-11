@@ -2,13 +2,16 @@ package com.ocr.john.omood.model;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ocr.john.omood.R;
@@ -64,6 +67,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         // - replace the contents of the view with that element
         holder.mImageView.setTag(mDatasetStr.get(position));
         holder.mImageView.setImageDrawable(mDataset.get(position));
+
+        // Switch color depending on emoticon : -TODO
+        holder.mImageView.setBackgroundColor(Color.CYAN);
+
+        // center the emoticon relative to the parent area :
+        // or change layout from within list_cell.xml resource file :
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        lp.gravity = Gravity.CENTER;
+        lp.setMargins(0,0,0,0);
+
+        holder.mImageView.setLayoutParams(lp);
 
     }
 
