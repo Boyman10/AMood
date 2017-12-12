@@ -10,9 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.ocr.john.omood.R;
 
@@ -69,17 +67,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         holder.mImageView.setImageDrawable(mDataset.get(position));
 
         // Switch color depending on emoticon : -TODO
-        holder.mImageView.setBackgroundColor(Color.CYAN);
+        holder.mCardView.setBackgroundColor(Color.CYAN);
+
 
         // center the emoticon relative to the parent area :
         // or change layout from within list_cell.xml resource file :
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
+       /* LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+
         lp.gravity = Gravity.CENTER;
         lp.setMargins(0,0,0,0);
 
+
         holder.mImageView.setLayoutParams(lp);
+        */
 
     }
 

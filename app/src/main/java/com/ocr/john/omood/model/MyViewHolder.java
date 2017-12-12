@@ -2,6 +2,7 @@ package com.ocr.john.omood.model;
 
 
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.ocr.john.omood.R;
 public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     // each data item is just an image in this case
     public static ImageView mImageView;
+    public static CardView mCardView;
 
     // holde instance of interface here :
     private ViewHolderOnClickListener vhListener;
@@ -28,6 +30,7 @@ public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnCli
 
         vhListener = listener;
         mImageView = (ImageView) itemView.findViewById(R.id.imageView);
+        mCardView = (CardView) itemView.findViewById(R.id.card_view);
         mImageView.setOnClickListener(this);
 
     }
