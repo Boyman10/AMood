@@ -2,6 +2,7 @@ package com.ocr.john.omood.controller;
 
 import android.content.Context;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -11,11 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.ocr.john.omood.R;
 import com.ocr.john.omood.model.MyAdapter;
-import com.ocr.john.omood.model.MyViewHolder;
 import com.ocr.john.omood.model.ViewHolderOnClickListener;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -28,15 +32,30 @@ public class DefaultFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    // the 2 buttons at the bottom of the layout
+    private ImageView mPlusButton;
+    private ImageView mHistoricButton;
+
+    private String selectedEmo;
+
+    SharedPreferences storedMood ;
+
+    public static final String TODAY_MOOD = "MyMoodFile";
+    private static final String BUNDLE_MOOD = "mood";
 
     public DefaultFragment() {
         // Required empty public constructor
+        selectedEmo = "Happy";
+
+        // Use the system to be able to retrieve and save data
+        storedMood = getActivity().getSharedPreferences(TODAY_MOOD, 0);
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        selectedEmo = storedMood.getString(BUNDLE_MOOD, null);
     }
 
     @Override
@@ -72,10 +91,57 @@ public class DefaultFragment extends Fragment {
                         .setMessage("HOOO")
                         .show();
                 Log.i("Info","Before calling fragment...");
+
+                // Now save a value so we can retrieve the selected element :
+                selectedEmo = tag;
+
+
             }
         });
         mRecyclerView.setAdapter(mAdapter);
 
+        // Add current EMO id to recyclerview --TODO
+
+
+
+
+
+
+
+        // Apply action to other buttons :
+        mPlusButton = view.findViewById(R.id.plus_button);
+        mPlusButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Context context = getActivity().getApplicationContext();
+
+                CharSequence text = "Hello toast ! Clicked on Plus above " + selectedEmo;
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }
+        });
+    }
+
+
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+
+        // Save Preferences here :
+        SharedPreferences.Editor editor = storedMood.edit();
+        editor.putString(BUNDLE_MOOD, selectedEmo);
+
+        // Commit the edits!
+        editor.apply();
+
     }
 
 }
+
+
