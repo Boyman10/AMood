@@ -47,14 +47,16 @@ public class DefaultFragment extends Fragment {
         // Required empty public constructor
         selectedEmo = "Happy";
 
-        // Use the system to be able to retrieve and save data
-        storedMood = getActivity().getSharedPreferences(TODAY_MOOD, 0);
 
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Use the system to be able to retrieve and save data
+        storedMood = getActivity().getSharedPreferences(TODAY_MOOD, 0);
+
         selectedEmo = storedMood.getString(BUNDLE_MOOD, null);
     }
 
