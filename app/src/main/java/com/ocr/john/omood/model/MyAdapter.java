@@ -71,7 +71,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mImageView.setTag(emos.emos.get(position));
-        holder.mImageView.setImageDrawable(mDatasetMap.get(emos.emos.get(position)));
+
+
+        Drawable dr = mDatasetMap.get(position);
+        if(dr != null) {
+            holder.mImageView.setImageDrawable(dr);
+
+        } else {
+
+            Log.i("Info","Error Drawable - position : " + emos.emos.get(position));
+        }
 
         // Switch color depending on emoticon : -TODO
         holder.mCardView.setBackgroundColor(Color.CYAN);
