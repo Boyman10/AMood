@@ -16,12 +16,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ocr.john.omood.R;
+import com.ocr.john.omood.model.Emo;
 import com.ocr.john.omood.model.MyAdapter;
 import com.ocr.john.omood.model.ViewHolderOnClickListener;
+import com.ocr.john.omood.model.exception.InvalidDataException;
 
 import static android.content.Context.MODE_PRIVATE;
 
-
+//https://developer.android.com/reference/android/app/Fragment.html
 /**
  * The main fragment called first when activity Main created
  * launches the recyclerview
@@ -32,11 +34,13 @@ public class DefaultFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private Emo emos = new Emo();
+
     // the 2 buttons at the bottom of the layout
     private ImageView mPlusButton;
     private ImageView mHistoricButton;
 
-    private String selectedEmo;
+    private int selectedEmo;
 
     SharedPreferences storedMood ;
 
@@ -45,7 +49,11 @@ public class DefaultFragment extends Fragment {
 
     public DefaultFragment() {
         // Required empty public constructor
-        selectedEmo = "Happy";
+
+        // default Emoticon :
+        selectedEmo = 0;
+
+        Log.i("Info","Calling default Fragment");
 
 
     }
@@ -54,11 +62,24 @@ public class DefaultFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Use the system to be able to retrieve and save data
+        // Use the system to be able to retrieve and saved data
         storedMood = getActivity().getSharedPreferences(TODAY_MOOD, 0);
 
-        selectedEmo = storedMood.getString(BUNDLE_MOOD, null);
+        try {
+            selectedEmo = storedMood.getInt(BUNDLE_MOOD, 0);
+
+        } catch(Exception e) {
+
+            Log.i("Info","invalid stored data" + e.getMessage());
+        } finally {
+
+            selectedEmo = 0;
+        }
+
+        Log.i("Info","Retrieving app with selected emo : " + selectedEmo);
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,17 +113,20 @@ public class DefaultFragment extends Fragment {
                         .setTitle("Clicked on me!" + tag)
                         .setMessage("HOOO")
                         .show();
-                Log.i("Info","Before calling fragment...");
+                Log.i("Info","New Emo selected : " + tag);
 
                 // Now save a value so we can retrieve the selected element :
-                selectedEmo = tag;
+                selectedEmo = emos.emos.indexOf(tag);
 
 
             }
         });
-        mRecyclerView.setAdapter(mAdapter);
 
-        // Add current EMO id to recyclerview --TODO
+        // Suppress casting object - find another way here !! -- TODO
+        // set default position of recyclerView
+        mRecyclerView.scrollToPosition(selectedEmo);
+
+        mRecyclerView.setAdapter(mAdapter);
 
 
 
@@ -131,19 +155,32 @@ public class DefaultFragment extends Fragment {
 
 
     @Override
+    public void onPause() {
+
+        super.onPause();
+        savingPref();
+        Log.i("Info","Pausing app with selected emo : " + selectedEmo);
+    }
+    @Override
     public void onDestroy() {
 
         super.onDestroy();
+        savingPref();
+        Log.i("Info","Destroying app with selected emo : " + selectedEmo);
+    }
+
+    public void savingPref() {
 
         // Save Preferences here :
         SharedPreferences.Editor editor = storedMood.edit();
-        editor.putString(BUNDLE_MOOD, selectedEmo);
+        editor.putInt(BUNDLE_MOOD, selectedEmo);
 
         // Commit the edits!
         editor.apply();
 
-    }
 
+
+    }
 }
 
 

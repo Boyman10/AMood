@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,12 @@ import android.widget.LinearLayout;
 import com.ocr.john.omood.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.ocr.john.omood.model.Emo.*;
 
 /**
  * Created by John on 11/27/2017.
@@ -24,8 +30,12 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    private List<Drawable> mDataset = new ArrayList<Drawable>();
-    private List<String> mDatasetStr = new ArrayList<String>();
+    //private List<Drawable> mDataset = new ArrayList<Drawable>();
+   // private List<String> mDatasetStr = new ArrayList<String>();
+
+    private Map<Integer,Drawable> mDatasetMap = new LinkedHashMap<>();
+
+    private Emo emos = new Emo();
 
     private ViewHolderOnClickListener vListener;
 
@@ -37,17 +47,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         Resources res = ct.getResources();
 
         // adding our images to the list :
-
-        mDataset.add(res.getDrawable(R.mipmap.smiley_happy));
-        mDatasetStr.add("Happy");
-        mDataset.add(res.getDrawable(R.mipmap.smiley_normal));
-        mDatasetStr.add("Normal");
-        mDataset.add(res.getDrawable(R.mipmap.smiley_super_happy));
-        mDatasetStr.add("Super");
-        mDataset.add(res.getDrawable(R.mipmap.smiley_sad));
-        mDatasetStr.add("Sad");
-        mDataset.add(res.getDrawable(R.mipmap.smiley_disappointed));
-        mDatasetStr.add("Disappointed");
+        mDatasetMap.put(0,res.getDrawable(R.mipmap.smiley_happy));
+        mDatasetMap.put(1,res.getDrawable(R.mipmap.smiley_normal));
+        mDatasetMap.put(2,res.getDrawable(R.mipmap.smiley_super_happy));
+        mDatasetMap.put(3,res.getDrawable(R.mipmap.smiley_sad));
+        mDatasetMap.put(4,res.getDrawable(R.mipmap.smiley_disappointed));
 
     }
 
@@ -58,13 +62,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         return new MyViewHolder(view,vListener);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    // Replace the contents of a view (invoked by the layout manager) - function being called by RecyclerView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+
+        Log.i("Info","Calling onBindViewHolder - position : " + position);
+
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mImageView.setTag(mDatasetStr.get(position));
-        holder.mImageView.setImageDrawable(mDataset.get(position));
+        holder.mImageView.setTag(emos.emos.get(position));
+        holder.mImageView.setImageDrawable(mDatasetMap.get(emos.emos.get(position)));
 
         // Switch color depending on emoticon : -TODO
         holder.mCardView.setBackgroundColor(Color.CYAN);
@@ -88,9 +95,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return mDatasetMap.size();
     }
-
-
 
 }
