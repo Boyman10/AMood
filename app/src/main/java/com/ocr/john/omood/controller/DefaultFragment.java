@@ -108,15 +108,15 @@ public class DefaultFragment extends Fragment {
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(getActivity(), new ViewHolderOnClickListener() {
             @Override
-            public void onViewHolderClick(View itemView, String tag) {
+            public void onViewHolderClick(View itemView, int position) {
                 AlertDialog show = new AlertDialog.Builder(itemView.getContext())
-                        .setTitle("Clicked on me!" + tag)
+                        .setTitle("Clicked on me!" + emos.emos.get(position))
                         .setMessage("HOOO")
                         .show();
-                Log.i("Info","New Emo selected : " + tag);
+                Log.i("Info","New Emo selected : " + emos.emos.get(position));
 
                 // Now save a value so we can retrieve the selected element :
-                selectedEmo = emos.emos.indexOf(tag);
+                selectedEmo = position;
 
 
             }

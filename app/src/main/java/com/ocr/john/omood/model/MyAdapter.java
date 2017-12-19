@@ -35,8 +35,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     private Map<Integer,Drawable> mDatasetMap = new LinkedHashMap<>();
 
-    private Emo emos = new Emo();
-
     private ViewHolderOnClickListener vListener;
 
     // Provide a suitable constructor (depends on the kind of dataset)
@@ -58,6 +56,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     // Create new views (invoked by the layout manager)
     public MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int position) {
+
+        Log.i("Info","Calling onCreateViewHolder - nouvelle vue créée : " );
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_cell, parent, false);
         return new MyViewHolder(view,vListener);
     }
@@ -68,18 +68,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
         Log.i("Info","Calling onBindViewHolder - position : " + position);
 
+
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mImageView.setTag(emos.emos.get(position));
-
 
         Drawable dr = mDatasetMap.get(position);
+
         if(dr != null) {
             holder.mImageView.setImageDrawable(dr);
 
         } else {
 
-            Log.i("Info","Error Drawable - position : " + emos.emos.get(position));
+            Log.i("Info","Error Drawable - position : " + position);
         }
 
         // Switch color depending on emoticon : -TODO
