@@ -27,6 +27,8 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * The main fragment called first when activity Main created
  * launches the recyclerview
+ * @author boy
+ * @version 1.0.1
  */
 public class DefaultFragment extends Fragment {
 
@@ -47,6 +49,9 @@ public class DefaultFragment extends Fragment {
     public static final String TODAY_MOOD = "MyMoodFile";
     private static final String BUNDLE_MOOD = "mood";
 
+    /**
+     * Constructor Default Fragment
+     */
     public DefaultFragment() {
         // Required empty public constructor
 
@@ -109,8 +114,10 @@ public class DefaultFragment extends Fragment {
         mAdapter = new MyAdapter(getActivity(), new ViewHolderOnClickListener() {
             @Override
             public void onViewHolderClick(View itemView, int position) {
+
+                // Emo selected for the current day !!
                 AlertDialog show = new AlertDialog.Builder(itemView.getContext())
-                        .setTitle("Clicked on me!" + emos.emos.get(position))
+                        .setTitle("Clicked on me! " + emos.emos.get(position))
                         .setMessage("HOOO")
                         .show();
                 Log.i("Info","New Emo selected : " + emos.emos.get(position));
@@ -127,10 +134,6 @@ public class DefaultFragment extends Fragment {
         mRecyclerView.scrollToPosition(selectedEmo);
 
         mRecyclerView.setAdapter(mAdapter);
-
-
-
-
 
 
 
@@ -169,6 +172,10 @@ public class DefaultFragment extends Fragment {
         Log.i("Info","Destroying app with selected emo : " + selectedEmo);
     }
 
+    /**
+     * Saving EMO in file
+     * TODO: saving as JSON file !
+     */
     public void savingPref() {
 
         // Save Preferences here :

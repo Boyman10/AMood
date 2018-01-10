@@ -12,12 +12,12 @@ import com.ocr.john.omood.R;
 
 
 /**
- * Created by hackme on 03/12/2017.
+ * Provide a reference to the views for each data item
+ * Complex data items may need more than one view per item, and
+ * you provide access to all the views for a data item in a view holder
+ * @author boy
+ * @version 1.0.1
  */
-
-// Provide a reference to the views for each data item
-// Complex data items may need more than one view per item, and
-// you provide access to all the views for a data item in a view holder
 public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     // each data item is just an image in this case
     public static ImageView mImageView;
