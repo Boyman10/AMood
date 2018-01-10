@@ -3,6 +3,7 @@ package com.ocr.john.omood.model;
 import android.graphics.Color;
 
 import java.text.SimpleDateFormat;
+import com.ocr.john.omood.model.exception.InvalidDataException;
 
 /**
  * Class intend to hold mood object
@@ -33,10 +34,17 @@ public class Mood {
     /**
      * Overriding constructor class
      */
-    public Mood(String date, String comment, short position) {
+    public Mood(String date, String comment, short position)  throws InvalidDataException {
 
+        // Check date format
         dateEmo = date;
-        emoPos = position;
+
+        // Check position
+        if (position > emo.length)
+            throw new InvalidDataException();
+        else
+            emoPos = position;
+
         this.comment = comment;
     }
 
