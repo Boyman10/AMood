@@ -24,20 +24,24 @@ import java.util.Map;
 import static com.ocr.john.omood.model.Emo.*;
 
 /**
- * Created by John on 11/27/2017.
+ * Class Adapter to deal with data
+ * @author john
+ * @version 1.0.1
  * infos in https://www.supinfo.com/articles/single/563-utiliser-recyclerview-android ?
  */
-
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-
-    //private List<Drawable> mDataset = new ArrayList<Drawable>();
-   // private List<String> mDatasetStr = new ArrayList<String>();
 
     private Map<Integer,Drawable> mDatasetMap = new LinkedHashMap<>();
 
     private ViewHolderOnClickListener vListener;
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    private final String BUNDLE_ADAPTER = "MyAdpater";
+
+    /**
+     * Constructor class initialize dataset and listener
+     * @param ct
+     * @param listener
+     */
     public MyAdapter(Context ct, ViewHolderOnClickListener listener) {
 
         vListener = listener;
@@ -45,6 +49,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         Resources res = ct.getResources();
 
         // adding our images to the list :
+        /**
+         * TODO : implement Mood Object iteration here :
+         */
         mDatasetMap.put(0,res.getDrawable(R.mipmap.smiley_happy));
         mDatasetMap.put(1,res.getDrawable(R.mipmap.smiley_normal));
         mDatasetMap.put(2,res.getDrawable(R.mipmap.smiley_super_happy));
@@ -53,11 +60,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     }
 
-    // Create new views (invoked by the layout manager)
+    /**
+     * Create new views (invoked by the layout manager)
+     * @param parent
+     * @param position
+     */
     public MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int position) {
 
-        Log.i("Info","Calling onCreateViewHolder - nouvelle vue créée : " );
+        Log.i(BUNDLE_ADAPTER,"Calling onCreateViewHolder - nouvelle vue créée : " );
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_cell, parent, false);
         return new MyViewHolder(view,vListener);
     }
@@ -66,7 +77,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        Log.i("Info","Calling onBindViewHolder - position : " + position);
+        Log.i(BUNDLE_ADAPTER,"Calling onBindViewHolder - position : " + position);
 
 
         // - get element from your dataset at this position

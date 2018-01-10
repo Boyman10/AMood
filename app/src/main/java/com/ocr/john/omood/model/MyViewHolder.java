@@ -23,25 +23,35 @@ public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     public static ImageView mImageView;
     public static CardView mCardView;
 
-    // holde instance of interface here :
+    private final String BUNDLE_VH_INFO = "MyViewHolder";
+
+    // hold instance of interface here :
     private ViewHolderOnClickListener vhListener;
 
+    /**
+     * Constructor class initializing listener, card view below image view
+     * Applying listener on Image View
+     * @param itemView
+     * @param listener
+     */
     public MyViewHolder(View itemView, ViewHolderOnClickListener listener) {
         super(itemView);
 
         vhListener = listener;
         mImageView = (ImageView) itemView.findViewById(R.id.imageView);
         mCardView = (CardView) itemView.findViewById(R.id.card_view);
+
         mImageView.setOnClickListener(this);
 
-        Log.i("Info","Calling MyViewHolder et Image et card " );
+        Log.i(BUNDLE_VH_INFO,"Calling MyViewHolder with Image and card " );
 
     }
 
     @Override
     public void onClick(View view){
 
-        Log.i("Info","Apply click on image with tag and current position : " + getAdapterPosition() );
+        Log.i(BUNDLE_VH_INFO,"Apply click on image with tag and current position : " + getAdapterPosition() );
+
         vhListener.onViewHolderClick(view,getAdapterPosition());
     }
 

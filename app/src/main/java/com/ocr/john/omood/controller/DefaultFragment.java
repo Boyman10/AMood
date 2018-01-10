@@ -19,9 +19,6 @@ import com.ocr.john.omood.R;
 import com.ocr.john.omood.model.Emo;
 import com.ocr.john.omood.model.MyAdapter;
 import com.ocr.john.omood.model.ViewHolderOnClickListener;
-import com.ocr.john.omood.model.exception.InvalidDataException;
-
-import static android.content.Context.MODE_PRIVATE;
 
 //https://developer.android.com/reference/android/app/Fragment.html
 /**
@@ -49,6 +46,7 @@ public class DefaultFragment extends Fragment {
     public static final String TODAY_MOOD = "MyMoodFile";
     private static final String BUNDLE_MOOD = "mood";
 
+    private static final String BUNDLE_DFT_FRG = "DefaultFragment";
     /**
      * Constructor Default Fragment
      */
@@ -58,7 +56,7 @@ public class DefaultFragment extends Fragment {
         // default Emoticon :
         selectedEmo = 0;
 
-        Log.i("Info","Calling default Fragment");
+        Log.i(BUNDLE_DFT_FRG,"Calling default Fragment");
 
 
     }
@@ -70,18 +68,18 @@ public class DefaultFragment extends Fragment {
         // Use the system to be able to retrieve and saved data
         storedMood = getActivity().getSharedPreferences(TODAY_MOOD, 0);
 
+        Log.i(BUNDLE_DFT_FRG,"Here is the saved emoticon position : " + storedMood.getInt(BUNDLE_MOOD, 0));
+
         try {
             selectedEmo = storedMood.getInt(BUNDLE_MOOD, 0);
 
         } catch(Exception e) {
 
-            Log.i("Info","invalid stored data" + e.getMessage());
-        } finally {
-
+            Log.i(BUNDLE_DFT_FRG,"invalid stored data" + e.getMessage());
             selectedEmo = 0;
         }
 
-        Log.i("Info","Retrieving app with selected emo : " + selectedEmo);
+        Log.i(BUNDLE_DFT_FRG,"Retrieving app with selected emo : " + selectedEmo);
 
     }
 
@@ -110,7 +108,7 @@ public class DefaultFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
+        // specify an adapter (see also next example) and instantiate ViewHolderOnClickListener as a parameter
         mAdapter = new MyAdapter(getActivity(), new ViewHolderOnClickListener() {
             @Override
             public void onViewHolderClick(View itemView, int position) {
@@ -120,7 +118,7 @@ public class DefaultFragment extends Fragment {
                         .setTitle("Clicked on me! " + emos.emos.get(position))
                         .setMessage("HOOO")
                         .show();
-                Log.i("Info","New Emo selected : " + emos.emos.get(position));
+                Log.i(BUNDLE_DFT_FRG,"New Emo selected : " + emos.emos.get(position));
 
                 // Now save a value so we can retrieve the selected element :
                 selectedEmo = position;
@@ -162,19 +160,20 @@ public class DefaultFragment extends Fragment {
 
         super.onPause();
         savingPref();
-        Log.i("Info","Pausing app with selected emo : " + selectedEmo);
+        Log.i(BUNDLE_DFT_FRG,"Pausing app with selected emo : " + selectedEmo);
     }
     @Override
     public void onDestroy() {
 
         super.onDestroy();
         savingPref();
-        Log.i("Info","Destroying app with selected emo : " + selectedEmo);
+        Log.i(BUNDLE_DFT_FRG,"Destroying app with selected emo : " + selectedEmo);
     }
 
     /**
      * Saving EMO in file
-     * TODO: saving as JSON file !
+     * TODO: saving as JSON file OR using sharedpreferences to store today's mood and Room
+     * for all historic data
      */
     public void savingPref() {
 
