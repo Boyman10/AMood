@@ -124,7 +124,7 @@ public class DefaultFragment extends Fragment {
 
                 // Now save a value so we can retrieve the selected element :
                 selectedEmo = position;
-
+                mAdapter.notifyItemChanged(position);
 
             }
         });
