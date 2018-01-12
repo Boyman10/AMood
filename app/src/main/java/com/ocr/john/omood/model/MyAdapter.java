@@ -94,7 +94,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         }
 
         // Switch color depending on emoticon : -TODO
-        holder.mCardView.setBackgroundColor(Color.CYAN);
+       // holder.mCardView.setBackgroundColor(Color.CYAN);
 
 
         // center the emoticon relative to the parent area :

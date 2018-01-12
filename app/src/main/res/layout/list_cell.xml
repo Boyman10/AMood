@@ -13,7 +13,9 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        card_view:cardCornerRadius="0dp">
+        card_view:cardCornerRadius="0dp"
+        card_view:cardBackgroundColor="@drawable/list_cell_background"
+        card_view:cardElevation="5dp">
 
         <ImageView
             android:id="@+id/imageView"
