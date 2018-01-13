@@ -26,16 +26,17 @@ import static com.ocr.john.omood.model.Emo.*;
 /**
  * Class Adapter to deal with data
  * @author john
- * @version 1.0.1
+ * @version 1.0.2
  * infos in https://www.supinfo.com/articles/single/563-utiliser-recyclerview-android ?
  */
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    private Map<Integer,Drawable> mDatasetMap = new LinkedHashMap<>();
-
     private ViewHolderOnClickListener vListener;
 
     private final String BUNDLE_ADAPTER = "MyAdpater";
+    private Mood mMood;
+
+    private Resources res;
 
     /**
      * Constructor class initialize dataset and listener
@@ -44,19 +45,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
      */
     public MyAdapter(Context ct, ViewHolderOnClickListener listener) {
 
+        // beware here if mood already created !
+        mMood = new Mood();
+
         vListener = listener;
         // fetch the getResources from the context sent by Activity
-        Resources res = ct.getResources();
-
-        // adding our images to the list :
-        /**
-         * TODO : implement Mood Object iteration here :
-         */
-        mDatasetMap.put(0,res.getDrawable(R.mipmap.smiley_happy));
-        mDatasetMap.put(1,res.getDrawable(R.mipmap.smiley_normal));
-        mDatasetMap.put(2,res.getDrawable(R.mipmap.smiley_super_happy));
-        mDatasetMap.put(3,res.getDrawable(R.mipmap.smiley_sad));
-        mDatasetMap.put(4,res.getDrawable(R.mipmap.smiley_disappointed));
+        res = ct.getResources();
 
     }
 
@@ -83,7 +77,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        Drawable dr = mDatasetMap.get(position);
+        //Drawable dr = mDatasetMap.get(position);
+        Drawable dr = res.getDrawable(mMood.drawableLinks[position]);
 
         if(dr != null) {
             holder.mImageView.setImageDrawable(dr);
@@ -94,7 +89,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         }
 
         // Switch color depending on emoticon : -TODO
-       // holder.mCardView.setBackgroundColor(Color.CYAN);
+        holder.mCardView.setBackgroundColor(mMood.bgColors[position]);
 
 
         // center the emoticon relative to the parent area :
@@ -115,7 +110,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDatasetMap.size();
+        return mMood.drawableLinks.length;
     }
 
 }

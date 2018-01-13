@@ -3,6 +3,9 @@ package com.ocr.john.omood.model;
 import android.graphics.Color;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.ocr.john.omood.R;
 import com.ocr.john.omood.model.exception.InvalidDataException;
 
 /**
@@ -15,9 +18,12 @@ public class Mood {
 
     // Constants :
     public final static String[] emo = {"Happy","Normal","Super Happy","Sad","Disappointed"};
-    public final static String[] drawableLinks = {"smiley_happy","smiley_normal","smiley_super_happy","smiley_sad","smiley_disappointed"};
+    public final static int[] drawableLinks = {R.mipmap.smiley_happy,R.mipmap.smiley_normal,R.mipmap.smiley_super_happy,R.mipmap.smiley_sad,
+            R.mipmap.smiley_disappointed};
     public final static int[] bgColors = {Color.CYAN,Color.WHITE,Color.YELLOW,Color.GREEN,Color.MAGENTA};
 
+    //https://www.freesoundeffects.com/
+    public final static int[] sounds = {R.raw.sad_cat,R.raw.long_dog,R.raw.attack,R.raw.boo,R.raw.scream};
 
     private String dateEmo;
     private String comment;
@@ -26,8 +32,9 @@ public class Mood {
     public Mood() {
 
         // Today s date
+        Date today = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        dateEmo = format.toString();
+        dateEmo = format.format(today);
         emoPos = 0;
     }
 
@@ -58,6 +65,15 @@ public class Mood {
     }
 
     /**
+     * Retrieve comment of emo in array for the current object
+     * @return emo comment
+     */
+    public String getComment() {
+
+        return comment;
+    }
+
+    /**
      * Retrieve position of emo in array for the current object
      * @return emo position
      */
@@ -65,6 +81,25 @@ public class Mood {
 
         return emoPos;
     }
+    /**
+     * Set position of emo
+     * @param position
+     */
+    public short setPosition(short position) throws InvalidDataException {
 
+        // Check position
+        if (position > emo.length)
+            throw new InvalidDataException();
+        else
+            emoPos = position;
+    }
+    /**
+     * Retrieve date of emo
+     * @return emo date
+     */
+    public String getDate() {
+
+        return dateEmo;
+    }
 
 }

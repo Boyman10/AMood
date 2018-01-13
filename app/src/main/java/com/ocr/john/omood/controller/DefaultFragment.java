@@ -3,6 +3,7 @@ package com.ocr.john.omood.controller;
 import android.content.Context;
 
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -18,8 +19,13 @@ import android.widget.Toast;
 
 import com.ocr.john.omood.R;
 import com.ocr.john.omood.model.Emo;
+import com.ocr.john.omood.model.Mood;
 import com.ocr.john.omood.model.MyAdapter;
 import com.ocr.john.omood.model.ViewHolderOnClickListener;
+import com.ocr.john.omood.model.exception.InvalidDataException;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 //https://developer.android.com/reference/android/app/Fragment.html
 /**
@@ -40,14 +46,24 @@ public class DefaultFragment extends Fragment {
     private ImageView mPlusButton;
     private ImageView mHistoricButton;
 
+    @Deprecated
     private int selectedEmo;
+
+    private Mood mMood;
 
     SharedPreferences storedMood ;
 
     public static final String TODAY_MOOD = "MyMoodFile";
-    private static final String BUNDLE_MOOD = "mood";
+
+    private static final String BUNDLE_MOOD_POS = "mood";
+    private static final String BUNDLE_MOOD_DATE = "date";
+    private static final String BUNDLE_MOOD_COMMENT = "comment";
 
     private static final String BUNDLE_DFT_FRG = "DefaultFragment";
+
+    private String todayDate;
+    private MediaPlayer catSound;
+
     /**
      * Constructor Default Fragment
      */
@@ -59,7 +75,10 @@ public class DefaultFragment extends Fragment {
 
         Log.i(BUNDLE_DFT_FRG,"Calling default Fragment");
 
-
+        // Today s date
+        Date today = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        todayDate = format.format(today);
     }
 
     @Override
@@ -69,10 +88,13 @@ public class DefaultFragment extends Fragment {
         // Use the system to be able to retrieve and saved data
         storedMood = getActivity().getSharedPreferences(TODAY_MOOD, 0);
 
-        Log.i(BUNDLE_DFT_FRG,"Here is the saved emoticon position : " + storedMood.getInt(BUNDLE_MOOD, 0));
+        Log.i(BUNDLE_DFT_FRG,"Here is the saved emoticon position : " + storedMood.getInt(BUNDLE_MOOD_POS, 0));
 
         try {
-            selectedEmo = storedMood.getInt(BUNDLE_MOOD, 0);
+            selectedEmo = storedMood.getInt(BUNDLE_MOOD_POS, 0);
+            mMood = new Mood(storedMood.getString(BUNDLE_MOOD_DATE, todayDate),
+                    storedMood.getString(BUNDLE_MOOD_COMMENT,""),
+                    storedMood.getInt(BUNDLE_MOOD_POS,0));
 
         } catch(Exception e) {
 
@@ -113,7 +135,7 @@ public class DefaultFragment extends Fragment {
         // specify an adapter (see also next example) and instantiate ViewHolderOnClickListener as a parameter
         mAdapter = new MyAdapter(getActivity(), new ViewHolderOnClickListener() {
             @Override
-            public void onViewHolderClick(View itemView, int position) {
+            public void onViewHolderClick(View itemView, short position) {
 
                 // Emo selected for the current day !!
                 AlertDialog show = new AlertDialog.Builder(itemView.getContext())
@@ -124,7 +146,19 @@ public class DefaultFragment extends Fragment {
 
                 // Now save a value so we can retrieve the selected element :
                 selectedEmo = position;
-                mAdapter.notifyItemChanged(position);
+                try {
+
+                    mMood.setPosition(position);
+
+                } catch (InvalidDataException e) {
+
+                    Log.i(BUNDLE_DFT_FRG,"Check position in array !!");
+                }
+
+                // We play a sound just for fun on application launch :
+                // TODO refer to Mood :
+                //catSound = MediaPlayer.create(this,);
+                //catSound.start();
 
             }
         });
@@ -181,7 +215,10 @@ public class DefaultFragment extends Fragment {
 
         // Save Preferences here :
         SharedPreferences.Editor editor = storedMood.edit();
-        editor.putInt(BUNDLE_MOOD, selectedEmo);
+
+        editor.putInt(BUNDLE_MOOD_POS, mMood.getPosition());
+        editor.putString(BUNDLE_MOOD_DATE,mMood.getDate());
+        editor.putString(BUNDLE_MOOD_COMMENT,mMood.getComment());
 
         // Commit the edits!
         editor.apply();

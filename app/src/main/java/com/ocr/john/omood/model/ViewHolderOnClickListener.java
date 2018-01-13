@@ -10,5 +10,5 @@ import android.view.View;
 public interface ViewHolderOnClickListener {
 
     //This method can be any parameters
-    void onViewHolderClick(View itemView, int position);
+    void onViewHolderClick(View itemView, short position);
 }
