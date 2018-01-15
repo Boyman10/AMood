@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ocr.john.omood.R;
-import com.ocr.john.omood.model.Emo;
 import com.ocr.john.omood.model.Mood;
 import com.ocr.john.omood.model.MyAdapter;
 import com.ocr.john.omood.model.ViewHolderOnClickListener;
@@ -39,8 +38,6 @@ public class DefaultFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
-    private Emo emos = new Emo();
 
     // the 2 buttons at the bottom of the layout
     private ImageView mPlusButton;
