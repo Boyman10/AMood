@@ -171,13 +171,20 @@ public class DefaultFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Context context = getActivity().getApplicationContext();
+                Context context = v.getContext();
 
-                CharSequence text = "Hello toast ! Clicked on Plus above " + mMood.getPosition();
+                /*CharSequence text = "Hello toast ! Clicked on Plus above " + mMood.getPosition();
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+*/
+                // Emo selected for the current day !!
+                AlertDialog show = new AlertDialog.Builder(context)
+                        .setTitle("Pick up your daily comment")
+                        .setView(R.layout.unique_comment)
+                        .setIcon(mMood.drawableLinks[mMood.getPosition()])
+                        .show();
 
             }
         });
