@@ -47,7 +47,7 @@ public class DefaultFragment extends Fragment {
     private ImageView mPlusButton;
     private ImageView mHistoricButton;
 
-
+    // Daily mood :
     private Mood mMood;
 
     SharedPreferences storedMood ;
@@ -81,7 +81,7 @@ public class DefaultFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Use the system to be able to retrieve and saved data
+        // Use the system to be able to retrieve and save data
         storedMood = getActivity().getSharedPreferences(TODAY_MOOD, 0);
 
         Log.i(BUNDLE_DFT_FRG,"Here is the saved emoticon position : " + storedMood.getInt(BUNDLE_MOOD_POS, 0));
@@ -101,6 +101,12 @@ public class DefaultFragment extends Fragment {
         }
 
         Log.i(BUNDLE_DFT_FRG,"Retrieving app with selected emo : " + mMood.getPosition());
+
+        /**
+         * TODO - Compare dates now and launch MOOD MANAGER
+         */
+
+
 
     }
 
