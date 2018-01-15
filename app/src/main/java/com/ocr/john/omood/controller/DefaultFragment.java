@@ -46,8 +46,6 @@ public class DefaultFragment extends Fragment {
     private ImageView mPlusButton;
     private ImageView mHistoricButton;
 
-    @Deprecated
-    private int selectedEmo;
 
     private Mood mMood;
 
@@ -62,16 +60,13 @@ public class DefaultFragment extends Fragment {
     private static final String BUNDLE_DFT_FRG = "DefaultFragment";
 
     private String todayDate;
-    private MediaPlayer catSound;
+    private MediaPlayer playSound;
 
     /**
      * Constructor Default Fragment
      */
     public DefaultFragment() {
         // Required empty public constructor
-
-        // default Emoticon :
-        selectedEmo = 0;
 
         Log.i(BUNDLE_DFT_FRG,"Calling default Fragment");
 
@@ -91,18 +86,20 @@ public class DefaultFragment extends Fragment {
         Log.i(BUNDLE_DFT_FRG,"Here is the saved emoticon position : " + storedMood.getInt(BUNDLE_MOOD_POS, 0));
 
         try {
-            selectedEmo = storedMood.getInt(BUNDLE_MOOD_POS, 0);
+
             mMood = new Mood(storedMood.getString(BUNDLE_MOOD_DATE, todayDate),
                     storedMood.getString(BUNDLE_MOOD_COMMENT,""),
-                    storedMood.getInt(BUNDLE_MOOD_POS,0));
+                    (short)storedMood.getInt(BUNDLE_MOOD_POS,0));
+
+            Log.i(BUNDLE_DFT_FRG,"Retrieving mood object" );
 
         } catch(Exception e) {
 
             Log.i(BUNDLE_DFT_FRG,"invalid stored data" + e.getMessage());
-            selectedEmo = 0;
+            mMood = new Mood();
         }
 
-        Log.i(BUNDLE_DFT_FRG,"Retrieving app with selected emo : " + selectedEmo);
+        Log.i(BUNDLE_DFT_FRG,"Retrieving app with selected emo : " + mMood.getPosition());
 
     }
 
@@ -139,13 +136,12 @@ public class DefaultFragment extends Fragment {
 
                 // Emo selected for the current day !!
                 AlertDialog show = new AlertDialog.Builder(itemView.getContext())
-                        .setTitle("Clicked on me! " + emos.emos.get(position))
+                        .setTitle("Clicked on me! " + mMood.emo[position])
                         .setMessage("HOOO")
                         .show();
-                Log.i(BUNDLE_DFT_FRG,"New Emo selected : " + emos.emos.get(position));
+                Log.i(BUNDLE_DFT_FRG,"New Emo selected : " + mMood.emo[position]);
 
                 // Now save a value so we can retrieve the selected element :
-                selectedEmo = position;
                 try {
 
                     mMood.setPosition(position);
@@ -157,15 +153,15 @@ public class DefaultFragment extends Fragment {
 
                 // We play a sound just for fun on application launch :
                 // TODO refer to Mood :
-                //catSound = MediaPlayer.create(this,);
-                //catSound.start();
+                playSound = MediaPlayer.create(itemView.getContext(),mMood.sounds[position]);
+                playSound.start();
 
             }
         });
 
         // Suppress casting object - find another way here !! -- TODO
         // set default position of recyclerView
-        mRecyclerView.scrollToPosition(selectedEmo);
+        mRecyclerView.scrollToPosition(mMood.getPosition());
 
         mRecyclerView.setAdapter(mAdapter);
 
@@ -180,7 +176,7 @@ public class DefaultFragment extends Fragment {
 
                 Context context = getActivity().getApplicationContext();
 
-                CharSequence text = "Hello toast ! Clicked on Plus above " + selectedEmo;
+                CharSequence text = "Hello toast ! Clicked on Plus above " + mMood.getPosition();
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
@@ -196,14 +192,14 @@ public class DefaultFragment extends Fragment {
 
         super.onPause();
         savingPref();
-        Log.i(BUNDLE_DFT_FRG,"Pausing app with selected emo : " + selectedEmo);
+        Log.i(BUNDLE_DFT_FRG,"Pausing app with selected emo : " + mMood.getPosition());
     }
     @Override
     public void onDestroy() {
 
         super.onDestroy();
         savingPref();
-        Log.i(BUNDLE_DFT_FRG,"Destroying app with selected emo : " + selectedEmo);
+        Log.i(BUNDLE_DFT_FRG,"Destroying app with selected emo : " + mMood.getPosition());
     }
 
     /**

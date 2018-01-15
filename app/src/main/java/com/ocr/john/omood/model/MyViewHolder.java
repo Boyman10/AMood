@@ -52,7 +52,7 @@ public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnCli
 
         Log.i(BUNDLE_VH_INFO,"Apply click on image with tag and current position : " + getAdapterPosition() );
 
-        vhListener.onViewHolderClick(view,getAdapterPosition());
+        vhListener.onViewHolderClick(view,(short)getAdapterPosition());
     }
 
 }

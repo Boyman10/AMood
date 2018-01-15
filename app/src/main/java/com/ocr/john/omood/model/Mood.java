@@ -85,7 +85,7 @@ public class Mood {
      * Set position of emo
      * @param position
      */
-    public short setPosition(short position) throws InvalidDataException {
+    public void setPosition(short position) throws InvalidDataException {
 
         // Check position
         if (position > emo.length)
