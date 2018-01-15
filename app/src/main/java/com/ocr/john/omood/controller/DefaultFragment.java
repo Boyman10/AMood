@@ -2,6 +2,7 @@ package com.ocr.john.omood.controller;
 
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -38,6 +40,8 @@ public class DefaultFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private LayoutInflater inflater;
 
     // the 2 buttons at the bottom of the layout
     private ImageView mPlusButton;
@@ -104,6 +108,8 @@ public class DefaultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        this.inflater = inflater;
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_default, container, false);
@@ -180,10 +186,24 @@ public class DefaultFragment extends Fragment {
                 toast.show();
 */
                 // Emo selected for the current day !!
+                final View dialogView = inflater.inflate(R.layout.unique_comment, null);
+
+                final EditText edt = (EditText) dialogView.findViewById(R.id.commentTxt);
+                edt.setText(mMood.getComment());
+
                 AlertDialog show = new AlertDialog.Builder(context)
                         .setTitle("Pick up your daily comment")
-                        .setView(R.layout.unique_comment)
+                        .setView(dialogView)
                         .setIcon(mMood.drawableLinks[mMood.getPosition()])
+                        .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                mMood.setComment(edt.getText().toString());
+
+                                Log.i(BUNDLE_DFT_FRG, "Comment submitted : " + edt.getText() );
+                            }
+                        })
                         .show();
 
             }
