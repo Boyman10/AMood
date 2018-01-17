@@ -41,6 +41,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         // fetch the getResources from the context sent by Activity
         res = ct.getResources();
 
+        Log.i(BUNDLE_ADAPTER,"ASSETS " + res.getAssets().toString());
+
+
     }
 
     /**
@@ -61,7 +64,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         Log.i(BUNDLE_ADAPTER,"Calling onBindViewHolder - position : " + position);
-
 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
