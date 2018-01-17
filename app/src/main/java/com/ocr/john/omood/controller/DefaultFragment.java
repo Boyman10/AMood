@@ -25,6 +25,7 @@ import com.ocr.john.omood.model.MyAdapter;
 import com.ocr.john.omood.model.ViewHolderOnClickListener;
 import com.ocr.john.omood.model.exception.InvalidDataException;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -103,11 +104,21 @@ public class DefaultFragment extends Fragment {
         Log.i(BUNDLE_DFT_FRG,"Retrieving app with selected emo : " + mMood.getPosition());
 
         /**
-         * TODO - Compare dates now and launch MOOD MANAGER
+         * TODO - Compare dates now and launch MOOD MANAGER if different day
          */
+        try {
+
+            if (!isToday(mMood.getDate())) {
+                // We need to save the current Mood Object and create a new Mood instance with default data
+                Log.i(BUNDLE_DFT_FRG,"We need to save the old Mood and initiate a new Mood Object...");
 
 
+            } // else do nothing and continue
 
+        } catch (ParseException e) {
+
+            Log.e(BUNDLE_DFT_FRG,"Error parsing dates " + mMood.getDate());
+        }
     }
 
 
@@ -161,7 +172,7 @@ public class DefaultFragment extends Fragment {
                 }
 
                 // We play a sound just for fun on application launch :
-                // TODO refer to Mood :
+
                 playSound = MediaPlayer.create(itemView.getContext(),mMood.sounds[position]);
                 playSound.start();
 
@@ -248,8 +259,23 @@ public class DefaultFragment extends Fragment {
 
         // Commit the edits!
         editor.apply();
+    }
 
+    /**
+     * Method to compare dates
+     * @return boolean
+     * @param date
+     * @throws ParseException
+     */
+    private boolean isToday(String date) throws ParseException {
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date curDate = sdf.parse(todayDate);
+        Date myDate  = sdf.parse(date);
+
+        Log.i(BUNDLE_DFT_FRG,"Today's date : " + todayDate + " and " + date);
+
+        return !myDate.before(curDate);
 
     }
 }
