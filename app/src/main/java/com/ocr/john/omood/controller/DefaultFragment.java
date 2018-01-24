@@ -102,14 +102,14 @@ public class DefaultFragment extends Fragment {
             mMood = new Mood();
         }
 
-        Log.i(BUNDLE_DFT_FRG,"Retrieving app with selected emo : " + mMood.getPosition());
+        Log.i(BUNDLE_DFT_FRG,"Retrieving app with selected emo : " + mMood.getEmoPos());
 
         /**
          * TODO - Compare dates now and launch MOOD MANAGER if different day
          */
         try {
 
-            if (!isToday(mMood.getDate())) {
+            if (!isToday(mMood.getDateEmo())) {
                 // We need to save the current Mood Object and create a new Mood instance with default data
                 Log.i(BUNDLE_DFT_FRG,"Saving data using MoodManager");
 
@@ -125,7 +125,7 @@ public class DefaultFragment extends Fragment {
 
         } catch (ParseException e) {
 
-            Log.e(BUNDLE_DFT_FRG,"Error parsing dates " + mMood.getDate());
+            Log.e(BUNDLE_DFT_FRG,"Error parsing dates " + mMood.getDateEmo());
         }
     }
 
@@ -172,9 +172,10 @@ public class DefaultFragment extends Fragment {
                 // Now save a value so we can retrieve the selected element :
                 try {
 
-                    mMood.setPosition(position);
+                    mMood.setEmoPos(position);
 
-                } catch (InvalidDataException e) {
+             //   } catch (InvalidDataException e) {
+                } catch (Exception e) {
 
                     Log.i(BUNDLE_DFT_FRG,"Check position in array !!");
                 }
@@ -189,7 +190,7 @@ public class DefaultFragment extends Fragment {
 
         // Suppress casting object - find another way here !! -- TODO
         // set default position of recyclerView
-        mRecyclerView.scrollToPosition(mMood.getPosition());
+        mRecyclerView.scrollToPosition(mMood.getEmoPos());
 
         mRecyclerView.setAdapter(mAdapter);
 
@@ -219,7 +220,7 @@ public class DefaultFragment extends Fragment {
                 AlertDialog show = new AlertDialog.Builder(context)
                         .setTitle("Pick up your daily comment")
                         .setView(dialogView)
-                        .setIcon(mMood.drawableLinks[mMood.getPosition()])
+                        .setIcon(mMood.drawableLinks[mMood.getEmoPos()])
                         .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -241,14 +242,14 @@ public class DefaultFragment extends Fragment {
 
         super.onPause();
         savingPref();
-        Log.i(BUNDLE_DFT_FRG,"Pausing app with selected emo : " + mMood.getPosition());
+        Log.i(BUNDLE_DFT_FRG,"Pausing app with selected emo : " + mMood.getEmoPos());
     }
     @Override
     public void onDestroy() {
 
         super.onDestroy();
         savingPref();
-        Log.i(BUNDLE_DFT_FRG,"Destroying app with selected emo : " + mMood.getPosition());
+        Log.i(BUNDLE_DFT_FRG,"Destroying app with selected emo : " + mMood.getEmoPos());
     }
 
     /**
@@ -261,8 +262,8 @@ public class DefaultFragment extends Fragment {
         // Save Preferences here :
         SharedPreferences.Editor editor = storedMood.edit();
 
-        editor.putInt(BUNDLE_MOOD_POS, mMood.getPosition());
-        editor.putString(BUNDLE_MOOD_DATE,mMood.getDate());
+        editor.putInt(BUNDLE_MOOD_POS, mMood.getEmoPos());
+        editor.putString(BUNDLE_MOOD_DATE,mMood.getDateEmo());
         editor.putString(BUNDLE_MOOD_COMMENT,mMood.getComment());
 
         // Commit the edits!

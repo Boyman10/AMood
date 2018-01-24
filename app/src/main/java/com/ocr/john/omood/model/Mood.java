@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +19,7 @@ import com.ocr.john.omood.model.exception.InvalidDataException;
  * @version 1.0.0
  * @param
  */
-@Entity(primaryKeys = {"dateEmo"})
+@Entity(primaryKeys = {"date_emo"})
 public class Mood {
 
     // Constants :
@@ -34,6 +35,8 @@ public class Mood {
     @Ignore
     public final static int[] sounds = {R.raw.sad_cat,R.raw.long_dog,R.raw.attack,R.raw.boo,R.raw.scream};
 
+    @NonNull
+    @ColumnInfo(name = "date_emo")
     private String dateEmo;
 
     @ColumnInfo(name = "comment")
@@ -54,15 +57,17 @@ public class Mood {
     /**
      * Overriding constructor class
      */
-    public Mood(String date, String comment, short position)  throws InvalidDataException {
+    public Mood(String date, String comment, short position)
+            //throws InvalidDataException
+     {
 
         // Check date format
         dateEmo = date;
 
-        // Check position
+        /* Check position
         if (position > emo.length)
             throw new InvalidDataException();
-        else
+        else*/
             emoPos = position;
 
         this.comment = comment;
@@ -90,7 +95,7 @@ public class Mood {
      * Retrieve position of emo in array for the current object
      * @return emo position
      */
-    public short getPosition() {
+    public short getEmoPos() {
 
         return emoPos;
     }
@@ -98,21 +103,27 @@ public class Mood {
      * Set position of emo
      * @param position
      */
-    public void setPosition(short position) throws InvalidDataException {
+    public void setEmoPos(short position)
+            //throws InvalidDataException
+    {
 
-        // Check position
+        /* Check position
         if (position > emo.length)
             throw new InvalidDataException();
-        else
+        else*/
             emoPos = position;
     }
     /**
      * Retrieve date of emo
      * @return emo date
      */
-    public String getDate() {
+    public String getDateEmo() {
 
         return dateEmo;
+    }
+
+    public void setDateEmo(String dateEmo) {
+        dateEmo = dateEmo;
     }
 
 }
