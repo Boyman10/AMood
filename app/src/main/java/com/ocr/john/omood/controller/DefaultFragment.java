@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.ocr.john.omood.R;
 import com.ocr.john.omood.model.Mood;
+import com.ocr.john.omood.model.MoodManager;
 import com.ocr.john.omood.model.MyAdapter;
 import com.ocr.john.omood.model.ViewHolderOnClickListener;
 import com.ocr.john.omood.model.exception.InvalidDataException;
@@ -110,8 +111,15 @@ public class DefaultFragment extends Fragment {
 
             if (!isToday(mMood.getDate())) {
                 // We need to save the current Mood Object and create a new Mood instance with default data
-                Log.i(BUNDLE_DFT_FRG,"We need to save the old Mood and initiate a new Mood Object...");
+                Log.i(BUNDLE_DFT_FRG,"Saving data using MoodManager");
 
+                MoodManager moodManager = new MoodManager();
+                moodManager.setRoom(getContext());
+                moodManager.addMood(mMood);
+
+                // Now initialize our daily object :
+                Log.i(BUNDLE_DFT_FRG,"Initializing Mood for our daily choice");
+                mMood = new Mood();
 
             } // else do nothing and continue
 

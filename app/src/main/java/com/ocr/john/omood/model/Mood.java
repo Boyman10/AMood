@@ -1,5 +1,9 @@
 package com.ocr.john.omood.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.graphics.Color;
 
 import java.text.SimpleDateFormat;
@@ -14,19 +18,28 @@ import com.ocr.john.omood.model.exception.InvalidDataException;
  * @version 1.0.0
  * @param
  */
+@Entity(primaryKeys = {"dateEmo"})
 public class Mood {
 
     // Constants :
+    @Ignore
     public final static String[] emo = {"Happy","Normal","Super Happy","Sad","Disappointed"};
+    @Ignore
     public final static int[] drawableLinks = {R.mipmap.smiley_happy,R.mipmap.smiley_normal,R.mipmap.smiley_super_happy,R.mipmap.smiley_sad,
             R.mipmap.smiley_disappointed};
+    @Ignore
     public final static int[] bgColors = {Color.CYAN,Color.WHITE,Color.YELLOW,Color.GREEN,Color.MAGENTA};
 
     //https://www.freesoundeffects.com/
+    @Ignore
     public final static int[] sounds = {R.raw.sad_cat,R.raw.long_dog,R.raw.attack,R.raw.boo,R.raw.scream};
 
     private String dateEmo;
+
+    @ColumnInfo(name = "comment")
     private String comment;
+
+    @ColumnInfo(name = "emo_position")
     private short emoPos;
 
     public Mood() {
