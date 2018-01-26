@@ -1,0 +1,35 @@
+package com.ocr.john.omood.model;
+
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
+
+import java.util.List;
+
+/**
+ * Mood View Model
+ * holds your app's UI data in a lifecycle-conscious way that survives configuration changes.
+ * Separating your app's UI data from your Activity and Fragment classes lets you better follow
+ * the single responsibility principle
+ * @see <a href="https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#8">Code labs</a>
+ */
+
+public class MoodViewModel extends AndroidViewModel {
+
+
+        private MoodRepository mRepository;
+
+        private LiveData<List<Mood>> mAllMoods;
+
+        public MoodViewModel (Application application) {
+            super(application);
+            mRepository = new MoodRepository(application);
+            mAllMoods = mRepository.getAllMoods();
+        }
+
+        LiveData<List<Mood>> getAllMoods() { return mAllMoods; }
+
+        public void insert(Mood mood) { mRepository.insert(mood); }
+}
+
+
