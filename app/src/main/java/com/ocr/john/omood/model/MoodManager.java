@@ -1,9 +1,12 @@
 package com.ocr.john.omood.model;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import java.util.List;
@@ -37,9 +40,9 @@ public class MoodManager {
      * </ul>
      * @see <a href="https://developer.android.com/training/data-storage/index.html">Dev Android</a>
       */
+    public void setRoom(Fragment frg) {
 
-    public void setRoom(Context context) {
-
+        mMoodViewModel = ViewModelProviders.of(frg).get(MoodViewModel.class);
     }
 
 

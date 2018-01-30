@@ -1,8 +1,10 @@
 package com.ocr.john.omood.controller;
 
+import android.app.Application;
 import android.content.Context;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -114,7 +116,7 @@ public class DefaultFragment extends Fragment {
                 Log.i(BUNDLE_DFT_FRG,"Saving data using MoodManager");
 
                 MoodManager moodManager = new MoodManager();
-                moodManager.setRoom(getContext());
+                moodManager.setRoom(this);
                 moodManager.addMood(mMood);
 
                 // Now initialize our daily object :
@@ -234,6 +236,24 @@ public class DefaultFragment extends Fragment {
 
             }
         });
+
+
+        // Historic button - launching other fragment :
+        mHistoricButton = view.findViewById(R.id.historic_button);
+        mHistoricButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Context context = v.getContext();
+                Log.i(BUNDLE_DFT_FRG,"Calling second activity with historic fragment");
+
+                Intent intent = new Intent(context.getApplicationContext(),HistoricActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
 
