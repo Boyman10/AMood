@@ -72,6 +72,7 @@ public class EmoFragment extends Fragment {
         /**
          * Alternative content once clicked on Historic Button
 
+         <a href="https://developer.android.com/training/basics/fragments/fragment-ui.html">Flexbile Fragments</a>
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final HistoricAdapter adapter = new HistoricAdapter(this);
         recyclerView.setAdapter(adapter);
