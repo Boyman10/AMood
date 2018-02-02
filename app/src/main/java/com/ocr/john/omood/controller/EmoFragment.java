@@ -3,6 +3,8 @@ package com.ocr.john.omood.controller;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +13,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.ocr.john.omood.R;
+import com.ocr.john.omood.model.HistoricAdapter;
 
 /**
  * EmoFragment class to display the description of the application on app launch
- * And the historic of the selected emo in a recyclerView once clicked on Historic button
+ * And the historic of the selected emos in a recyclerView once clicked on Historic button
  * @author boy
  * @version 1.0.1
  */
@@ -65,6 +68,15 @@ public class EmoFragment extends Fragment {
 
         Log.i(BUNDLE_EMO_FRG,"End of onViewCreated - WEB View ");
 
+
+        /**
+         * Alternative content once clicked on Historic Button
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        final HistoricAdapter adapter = new HistoricAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+         */
     }
 
 }

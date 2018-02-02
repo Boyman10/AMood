@@ -19,6 +19,7 @@ public class MoodViewModel extends AndroidViewModel {
 
         private MoodRepository mRepository;
 
+        /** @see <a href="https://developer.android.com/topic/libraries/architecture/livedata.html">Live data</a> */
         private LiveData<List<Mood>> mAllMoods;
 
         public MoodViewModel (Application application) {
