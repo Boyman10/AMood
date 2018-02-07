@@ -205,6 +205,9 @@ public class DefaultFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                // https://blog.mindorks.com/understanding-context-in-android-application-330913e32514
+                //Context is a handle to the system, it provides services like resolving resources,
+                // obtaining access to databases and preferences, and so on
                 Context context = v.getContext();
 
                 /*CharSequence text = "Hello toast ! Clicked on Plus above " + mMood.getPosition();
