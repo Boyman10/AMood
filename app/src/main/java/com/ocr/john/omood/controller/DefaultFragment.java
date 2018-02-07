@@ -205,7 +205,7 @@ public class DefaultFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // https://blog.mindorks.com/understanding-context-in-android-application-330913e32514
+                // https://medium.com/@ali.muzaffar/which-context-should-i-use-in-android-e3133d00772c
                 //Context is a handle to the system, it provides services like resolving resources,
                 // obtaining access to databases and preferences, and so on
                 Context context = v.getContext();
