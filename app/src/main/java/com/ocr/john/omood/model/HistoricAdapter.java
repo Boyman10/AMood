@@ -19,13 +19,16 @@ import java.util.List;
  */
 public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.HistoricViewHolder> {
 
-    private final TextView historicItemView;
 
-    class HistoricViewHolder(View itemView) {
 
-        super(itemView);
-        historicItemView = itemView.findViewById(R.id.textView)
+    class HistoricViewHolder extends RecyclerView.ViewHolder {
 
+        private final TextView historicItemView;
+
+        public HistoricViewHolder(View itemView) {
+            super(itemView);
+            historicItemView = itemView.findViewById(R.id.card_view);
+        }
     }
 
     private final LayoutInflater mInflater;
@@ -35,7 +38,7 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.Histor
 
     @Override
     public HistoricViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.historic_view_item, parent, false);
         return new HistoricViewHolder(itemView);
     }
 
@@ -43,7 +46,7 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.Histor
     public void onBindViewHolder(HistoricViewHolder holder, int position) {
         if (mMoods != null) {
             Mood current = mMoods.get(position);
-            holder.historicItemView.setText(current.getMood());
+            holder.historicItemView.setText(current.getComment());
         } else {
             // Covers the case of data not being ready yet.
             holder.historicItemView.setText("No Word");
