@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        Log.i(BUNDLE_MAIN_ACT,"Launching default fragment from main activity");
+
         // start the Default fragment :
         getSupportFragmentManager()
                 .beginTransaction()
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
 
         // Launch documentation throught fragment
+        // TODO : this line is not triggered !!!
         load(BUNDLE_DOC);
     }
 
@@ -40,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
      * @param title : title of Fragment
      */
     public void load(String title) {
+
+        Log.i(BUNDLE_MAIN_ACT,"Calling load method from mainactivity");
 
         if(findViewById(R.id.emoFrg) != null) {
 

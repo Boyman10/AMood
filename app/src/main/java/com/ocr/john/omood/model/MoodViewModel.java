@@ -11,6 +11,8 @@ import java.util.List;
  * holds your app's UI data in a lifecycle-conscious way that survives configuration changes.
  * Separating your app's UI data from your Activity and Fragment classes lets you better follow
  * the single responsibility principle
+ * Your activities and fragments are responsible for drawing data to the screen,
+ * while your ViewModel can take care of holding and processing all the data needed for the UI.
  * @see <a href="https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#8">Code labs</a>
  */
 
