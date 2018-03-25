@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 
 import com.ocr.john.omood.R;
 import com.ocr.john.omood.model.HistoricAdapter;
+import com.ocr.john.omood.model.ViewHolderOnClickListener;
 
 /**
  * EmoFragment class to display the description of the application on app launch
@@ -24,6 +25,11 @@ import com.ocr.john.omood.model.HistoricAdapter;
 public class EmoFragment extends Fragment {
 
     private final String BUNDLE_EMO_FRG = "EmoFragment";
+
+    // variable to retrieve source of fragment - main activity by default with no action -> webview
+    private static String frgSource = "default";
+    private RecyclerView.Adapter mAdapter;
+
 
     public EmoFragment() {
         // Required empty public constructor
@@ -37,6 +43,8 @@ public class EmoFragment extends Fragment {
     public static EmoFragment create(String title) {
         Bundle args = new Bundle();
         args.putString("emotag", title);
+        this.frgSource = title;
+
         // singleton :
         EmoFragment emofrg = new EmoFragment();
         emofrg.setArguments(args);
@@ -55,29 +63,44 @@ public class EmoFragment extends Fragment {
 
         super.onViewCreated(view,savedInstanceState);
 
-        Log.i(BUNDLE_EMO_FRG,"Calling onViewCreated - WEB View ");
-        WebView webView = (WebView) view.findViewById(R.id.webView);
+        if (!frgSource.equals("Historic")) {
+            Log.i(BUNDLE_EMO_FRG, "Calling onViewCreated - WEB View ");
+            WebView webView = (WebView) view.findViewById(R.id.webView);
 
-        webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setJavaScriptEnabled(true);
 
-        // OR, you can also load from an HTML string:
-        String summary = "<html><body><h1>Track your mood !</h1>" +
-                "         Click on an emoticon to indicate your daily mood." +
-                "         <p>You will be able to access your historic at any time.</p></body></html>";
-        webView.loadData(summary, "text/html", null);
+            // OR, you can also load from an HTML string:
+            String summary = "<html><body><h1>Track your mood !</h1>" +
+                    "         Click on an emoticon to indicate your daily mood." +
+                    "         <p>You will be able to access your historic at any time.</p></body></html>";
+            webView.loadData(summary, "text/html", null);
 
-        Log.i(BUNDLE_EMO_FRG,"End of onViewCreated - WEB View ");
+            Log.i(BUNDLE_EMO_FRG, "End of onViewCreated - WEB View ");
+        } else {
+
+            /**
+             * Alternative content once clicked on Historic Button
+
+             <a href="https://developer.android.com/training/basics/fragments/fragment-ui.html">Flexbile Fragments</a>
+             */
+
+             RecyclerView recyclerView = view.findViewById(R.id.historic_recycler_view);
+
+            mAdapter = new HistoricAdapter(getActivity(), new ViewHolderOnClickListener() {
+                @Override
+                public void onViewHolderClick(View itemView, short position) {
+
+                    // Toast comment
 
 
-        /**
-         * Alternative content once clicked on Historic Button
+                }
+            });
 
-         <a href="https://developer.android.com/training/basics/fragments/fragment-ui.html">Flexbile Fragments</a>
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final HistoricAdapter adapter = new HistoricAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-         */
+
+             recyclerView.setAdapter(mAdapter);
+
+
+        }
     }
 
 }

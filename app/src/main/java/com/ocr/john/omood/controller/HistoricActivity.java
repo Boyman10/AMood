@@ -20,7 +20,7 @@ public class HistoricActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_historic);
 
-        EmoFragment frg = EmoFragment.create("Historic...");
+        EmoFragment frg = EmoFragment.create("Historic");
 
         // start the historic fragment :
         getSupportFragmentManager()

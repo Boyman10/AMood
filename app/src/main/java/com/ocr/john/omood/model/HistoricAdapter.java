@@ -2,6 +2,7 @@ package com.ocr.john.omood.model;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,17 +25,25 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.Histor
     class HistoricViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView historicItemView;
+        private final static String BUNDLE_FR_INFO = "historic-adapter";
 
-        public HistoricViewHolder(View itemView) {
+        // hold instance of interface here :
+        private ViewHolderOnClickListener vhListener;
+
+        public HistoricViewHolder(View itemView, ViewHolderOnClickListener listener) {
             super(itemView);
             historicItemView = itemView.findViewById(R.id.card_view);
+            vhListener = listener;
+            historicItemView.setOnClickListener(this);
+
+            Log.i(BUNDLE_FR_INFO,"Calling MyViewHolder with Image and card " );
         }
     }
 
     private final LayoutInflater mInflater;
     private List<Mood> mMoods; // Cached copy of Moods
 
-    HistoricAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    public HistoricAdapter(Context context) { mInflater = LayoutInflater.from(context); }
 
     @Override
     public HistoricViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
