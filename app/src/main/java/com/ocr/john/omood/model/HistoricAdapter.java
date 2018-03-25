@@ -21,59 +21,80 @@ import java.util.List;
 public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.HistoricViewHolder> {
 
 
+    // hold instance of interface here :
+    private ViewHolderOnClickListener vhListener;
+    private final static String BUNDLE_FR_INFO = "historic-adapter";
 
-    class HistoricViewHolder extends RecyclerView.ViewHolder {
+// WE hold the cached moods
+    private List<Mood> mMoods; // Cached copy of moods
+    private final LayoutInflater mInflater;
+
+    class HistoricViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView historicItemView;
-        private final static String BUNDLE_FR_INFO = "historic-adapter";
 
-        // hold instance of interface here :
-        private ViewHolderOnClickListener vhListener;
 
-        public HistoricViewHolder(View itemView, ViewHolderOnClickListener listener) {
+        public HistoricViewHolder(View itemView) {
             super(itemView);
+            Log.i(BUNDLE_FR_INFO,"Calling HistoricViewHolder - card view + set on click" );
+
             historicItemView = itemView.findViewById(R.id.card_view);
-            vhListener = listener;
             historicItemView.setOnClickListener(this);
 
-            Log.i(BUNDLE_FR_INFO,"Calling MyViewHolder with Image and card " );
+            Log.i(BUNDLE_FR_INFO,"Calling HistoricViewHolder end of method" );
+        }
+
+
+        @Override
+        public void onClick(View view){
+
+            Log.i(BUNDLE_FR_INFO,"Apply click on item : " + getAdapterPosition() );
+
+            vhListener.onViewHolderClick(view,(short)getAdapterPosition());
         }
     }
 
-    private final LayoutInflater mInflater;
-    private List<Mood> mMoods; // Cached copy of Moods
 
-    public HistoricAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    public HistoricAdapter(Context context, ViewHolderOnClickListener listener) {
+
+        mInflater = LayoutInflater.from(context);
+        vhListener = listener;
+
+        Log.i(BUNDLE_FR_INFO, "Get the historic adapter");
+
+    }
 
     @Override
     public HistoricViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.historic_view_item, parent, false);
+
+        Log.i(BUNDLE_FR_INFO, "onCreateViewHolder get an histtoric view item");
+
+
         return new HistoricViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(HistoricViewHolder holder, int position) {
+
+        Log.i(BUNDLE_FR_INFO, "onBindViewHolder...");
         if (mMoods != null) {
             Mood current = mMoods.get(position);
-            holder.historicItemView.setText(current.getComment());
+            holder.historicItemView.setText(current.getDateEmo());
         } else {
             // Covers the case of data not being ready yet.
-            holder.historicItemView.setText("No Word");
+            holder.historicItemView.setText("No mood defined");
         }
-    }
 
-    void setMoods(List<Mood> moods){
-        mMoods = moods;
-        notifyDataSetChanged();
     }
 
     // getItemCount() is called many times, and when it is first called,
     // mMoods has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
-        if (mMoods != null)
-            return mMoods.size();
-        else return 0;
+        Log.i(BUNDLE_FR_INFO, "Get Item count");
+
+        return mMoods.size();
     }
 
 }

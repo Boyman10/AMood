@@ -3,6 +3,7 @@ package com.ocr.john.omood.controller;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -43,7 +44,7 @@ public class EmoFragment extends Fragment {
     public static EmoFragment create(String title) {
         Bundle args = new Bundle();
         args.putString("emotag", title);
-        this.frgSource = title;
+        frgSource = title;
 
         // singleton :
         EmoFragment emofrg = new EmoFragment();
@@ -55,7 +56,13 @@ public class EmoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_emo, container, false);
+        if (!frgSource.equals("Historic")) {
+            return inflater.inflate(R.layout.fragment_emo, container, false);
+
+        } else {
+            return inflater.inflate(R.layout.fragment_historic, container, false);
+
+        }
     }
 
     @Override
@@ -77,15 +84,22 @@ public class EmoFragment extends Fragment {
 
             Log.i(BUNDLE_EMO_FRG, "End of onViewCreated - WEB View ");
         } else {
-
+            Log.i(BUNDLE_EMO_FRG, "Launching historic recyclerview");
             /**
              * Alternative content once clicked on Historic Button
 
              <a href="https://developer.android.com/training/basics/fragments/fragment-ui.html">Flexbile Fragments</a>
              */
+            RecyclerView.LayoutManager mLayoutManager;
 
              RecyclerView recyclerView = view.findViewById(R.id.historic_recycler_view);
 
+            recyclerView.setHasFixedSize(true);
+
+            // use a linear layout manager
+            mLayoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
             mAdapter = new HistoricAdapter(getActivity(), new ViewHolderOnClickListener() {
                 @Override
                 public void onViewHolderClick(View itemView, short position) {
