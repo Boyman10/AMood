@@ -1,7 +1,10 @@
 package com.ocr.john.omood.controller;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +18,11 @@ import android.webkit.WebViewClient;
 
 import com.ocr.john.omood.R;
 import com.ocr.john.omood.model.HistoricAdapter;
+import com.ocr.john.omood.model.Mood;
+import com.ocr.john.omood.model.MoodViewModel;
 import com.ocr.john.omood.model.ViewHolderOnClickListener;
+
+import java.util.List;
 
 /**
  * EmoFragment class to display the description of the application on app launch
@@ -30,6 +37,9 @@ public class EmoFragment extends Fragment {
     // variable to retrieve source of fragment - main activity by default with no action -> webview
     private static String frgSource = "default";
     private RecyclerView.Adapter mAdapter;
+
+    //
+    private MoodViewModel mMoodViewModel;
 
 
     public EmoFragment() {
@@ -114,6 +124,14 @@ public class EmoFragment extends Fragment {
              recyclerView.setAdapter(mAdapter);
 
 
+            mMoodViewModel = ViewModelProviders.of(this).get(MoodViewModel.class);
+            mMoodViewModel.getAllMoods().observe(this, new Observer<List<Mood>>() {
+                @Override
+                public void onChanged(@Nullable final List<Mood> moods) {
+                    // Update the cached copy of the moods in the adapter.
+                    ((HistoricAdapter)mAdapter).setMoods(moods);
+                }
+            });
         }
     }
 

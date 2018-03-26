@@ -1,14 +1,18 @@
 package com.ocr.john.omood.model;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ocr.john.omood.R;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -29,9 +33,13 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.Histor
     private List<Mood> mMoods; // Cached copy of moods
     private final LayoutInflater mInflater;
 
+
+
     class HistoricViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final TextView historicItemView;
+        private CardView historicItemView;
+        private TextView mTextView;
+        private ImageView mImageView;
 
 
         public HistoricViewHolder(View itemView) {
@@ -40,7 +48,8 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.Histor
 
             historicItemView = itemView.findViewById(R.id.card_view);
             historicItemView.setOnClickListener(this);
-
+            mImageView = (ImageView) itemView.findViewById(R.id.imageView);
+            mTextView = (TextView) itemView.findViewById(R.id.txtView);
             Log.i(BUNDLE_FR_INFO,"Calling HistoricViewHolder end of method" );
         }
 
@@ -80,17 +89,21 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.Histor
         Log.i(BUNDLE_FR_INFO, "onBindViewHolder...");
         if (mMoods != null) {
             Mood current = mMoods.get(position);
-            holder.historicItemView.setText(current.getDateEmo());
+
+            // Create textView under Cardview
+            holder.mTextView.setText(current.getComment());
+
         } else {
             // Covers the case of data not being ready yet.
-            holder.historicItemView.setText("No mood defined");
+            holder.mTextView.setText("No mood defined");
         }
 
     }
-    void setMoods(List<Mood> moods){
+    public void setMoods(List<Mood> moods){
         mMoods = moods;
         notifyDataSetChanged();
     }
+
     // getItemCount() is called many times, and when it is first called,
     // mMoods has not been updated (means initially, it's null, and we can't return null).
     @Override

@@ -30,7 +30,7 @@ public class MoodViewModel extends AndroidViewModel {
             mAllMoods = mRepository.getAllMoods();
         }
 
-        LiveData<List<Mood>> getAllMoods() { return mAllMoods; }
+        public LiveData<List<Mood>> getAllMoods() { return mAllMoods; }
 
         public void insert(Mood mood) { mRepository.insert(mood); }
 }
