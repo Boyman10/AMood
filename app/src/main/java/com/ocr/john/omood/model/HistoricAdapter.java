@@ -87,14 +87,18 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.Histor
         }
 
     }
-
+    void setMoods(List<Mood> moods){
+        mMoods = moods;
+        notifyDataSetChanged();
+    }
     // getItemCount() is called many times, and when it is first called,
     // mMoods has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
         Log.i(BUNDLE_FR_INFO, "Get Item count");
-
+        if(mMoods != null)
         return mMoods.size();
+        else return 0;
     }
 
 }
