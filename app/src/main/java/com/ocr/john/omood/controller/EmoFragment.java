@@ -14,10 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.ocr.john.omood.R;
-import com.ocr.john.omood.model.HistoricAdapter;
+import com.ocr.john.omood.adapter.HistoricAdapter;
 import com.ocr.john.omood.model.Mood;
 import com.ocr.john.omood.model.MoodViewModel;
 import com.ocr.john.omood.model.ViewHolderOnClickListener;

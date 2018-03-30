@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.ocr.john.omood.model.Mood;
 import com.ocr.john.omood.model.MoodDao;
+import com.ocr.john.omood.model.MoodRoomDatabase;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,7 +13,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-import java.util.List;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 /**
  * JUnit test of the Room Database
@@ -21,15 +24,16 @@ import java.util.List;
  * @author boy
  */
 @RunWith(AndroidJUnit4.class)
-public class SimpleEntityReadWriteTest {
+public class MoodDbUnitTest {
+
     private MoodDao mMoodDao;
-    private TestDatabase mDb;
+    private MoodRoomDatabase mDb;
 
     @Before
     public void createDb() {
         Context context = InstrumentationRegistry.getTargetContext();
-        mDb = Room.inMemoryDatabaseBuilder(context, TestDatabase.class).build();
-        mMoodDao = mDb.getMoodDao();
+        mDb = Room.inMemoryDatabaseBuilder(context, MoodRoomDatabase.class).build();
+        mMoodDao = mDb.moodDao();
     }
 
     @After
@@ -38,11 +42,14 @@ public class SimpleEntityReadWriteTest {
     }
 
     @Test
-    public void writeUserAndReadInList() throws Exception {
-        Mood mood = TestUtil.createUser(3);
-        mood.setName("george");
+    public void writeMoodAndReadInList() throws Exception {
+        Mood mood = new Mood();
+        mood.setComment("george comment");
         mMoodDao.insert(mood);
-        List<Mood> byName = mMoodDao.findMoodByName("george");
-        assertThat(byName.get(0), equalTo(mood));
+
+        Mood byComment = mMoodDao.findByComment("george comment");
+
+        assertThat(byComment, equalTo(mood));
+
     }
 }

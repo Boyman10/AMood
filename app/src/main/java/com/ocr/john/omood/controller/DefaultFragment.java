@@ -1,6 +1,5 @@
 package com.ocr.john.omood.controller;
 
-import android.app.Application;
 import android.content.Context;
 
 import android.content.DialogInterface;
@@ -21,14 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.ocr.john.omood.R;
 import com.ocr.john.omood.model.Mood;
 import com.ocr.john.omood.model.MoodManager;
-import com.ocr.john.omood.model.MyAdapter;
+import com.ocr.john.omood.adapter.MyAdapter;
 import com.ocr.john.omood.model.ViewHolderOnClickListener;
-import com.ocr.john.omood.model.exception.InvalidDataException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
