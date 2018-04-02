@@ -100,6 +100,8 @@ public class  HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.Histo
 
     }
     public void setMoods(List<Mood> moods){
+
+        Log.i(BUNDLE_FR_INFO, "Setting up moods inside Adapter");
         mMoods = moods;
         notifyDataSetChanged();
     }

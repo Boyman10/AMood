@@ -95,7 +95,7 @@ public class MoodDbInstrumentedTest {
         for(short i = 0;i < 3;i++) {
 
             //String date, String comment, short position)
-            mood = new Mood(dtf.format(localDate),"Comment number " + i,i)
+            mood = new Mood(dtf.format(localDate),"Comment number " + i,i);
             moods.add(mood);
 
             // save it to DB
