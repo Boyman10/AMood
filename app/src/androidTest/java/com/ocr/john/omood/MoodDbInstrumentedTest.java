@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.ocr.john.omood.model.Mood;
 import com.ocr.john.omood.model.MoodDao;
@@ -31,6 +32,9 @@ public class MoodDbInstrumentedTest {
     private MoodDao mMoodDao;
     private MoodRoomDatabase mDb;
 
+    // save our class name as bundle for logging
+    private static final String BUNDLE_INST_TEST = MoodDbInstrumentedTest.class.getSimpleName();
+
     @Before
     public void createDb() {
         Context context = InstrumentationRegistry.getTargetContext();
@@ -45,13 +49,20 @@ public class MoodDbInstrumentedTest {
 
     @Test
     public void writeMoodAndReadInList() throws Exception {
+
+        // Instantiate new Mood object
         Mood mood = new Mood();
         mood.setComment("george comment");
+
+        // save it to DB
         mMoodDao.insert(mood);
 
+        // Get back the object from DB
         Mood byComment = mMoodDao.findByComment("george comment");
 
-        assertThat(byComment, equalTo(mood));
+        Log.d(BUNDLE_INST_TEST,"Find mood by comment - date : " + byComment.getDateEmo() + " Emo position : " + byComment.getEmoPos());
+        // Compare those Object
+        assertThat(byComment.getComment(), equalTo(mood.getComment()));
 
     }
 }
