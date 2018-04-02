@@ -1,5 +1,6 @@
 package com.ocr.john.omood;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -16,6 +17,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -47,8 +52,13 @@ public class MoodDbInstrumentedTest {
         mDb.close();
     }
 
+    /**
+     * Testing writing and reading unique mood object
+     * Room DB
+     * @throws Exception
+     */
     @Test
-    public void writeMoodAndReadInList() throws Exception {
+    public void writeMoodAndReadIn() throws Exception {
 
         // Instantiate new Mood object
         Mood mood = new Mood();
@@ -65,4 +75,44 @@ public class MoodDbInstrumentedTest {
         assertThat(byComment.getComment(), equalTo(mood.getComment()));
 
     }
+
+    /**
+     * Writing and reading whole list of moods
+     * to/from Room DB
+     * @throws Exception
+     */
+    @Test
+    public void writeMoodAndReadInList() throws Exception {
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.now();
+
+        // Instantiate new Mood objects
+        ArrayList<Mood> moods = new ArrayList<Mood>();
+
+        Mood mood;
+
+        for(short i = 0;i < 3;i++) {
+
+            //String date, String comment, short position)
+            mood = new Mood(dtf.format(localDate),"Comment number " + i,i)
+            moods.add(mood);
+
+            // save it to DB
+            mMoodDao.insert(mood);
+
+        }
+
+        // Get the list of moods from the DB
+        LiveData<List<Mood>> moodsBack = mMoodDao.getAll();
+
+        short i = 0;
+        for (Mood aMood: moodsBack.getValue()) {
+
+            assertThat(aMood.getComment(), equalTo(moods.get(i).getComment()));
+            i++;
+        }
+
+    }
+
 }

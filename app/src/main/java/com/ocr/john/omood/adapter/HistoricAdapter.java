@@ -22,7 +22,7 @@ import java.util.List;
  * @version 1.0.1
  * @see <a href="https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#10">Code labs</a>
  */
-public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.HistoricViewHolder> {
+public class  HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.HistoricViewHolder> {
 
 
     // hold instance of interface here :
