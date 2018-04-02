@@ -2,6 +2,8 @@ package com.ocr.john.omood;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
 
 import com.ocr.john.omood.model.Mood;
 import com.ocr.john.omood.model.MoodDao;
@@ -18,17 +20,17 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 /**
- * JUnit test of the Room Database
+ * JUnit instrumented test of the Room Database
  * https://developer.android.com/training/data-storage/room/testing-db.html#android
  * @version 1.0.0
  * @author boy
  */
-//@RunWith(AndroidJUnit4.class)
-public class MoodDbUnitTest {
+@RunWith(AndroidJUnit4.class)
+public class MoodDbInstrumentedTest {
 
     private MoodDao mMoodDao;
     private MoodRoomDatabase mDb;
-/* TODO whatever tests not belonging to DB and using the context -> intrumentedTest
+
     @Before
     public void createDb() {
         Context context = InstrumentationRegistry.getTargetContext();
@@ -52,5 +54,4 @@ public class MoodDbUnitTest {
         assertThat(byComment, equalTo(mood));
 
     }
-    */
 }
